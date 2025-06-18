@@ -1,0 +1,1 @@
+A simple and clean full-stack Notes App built using React, Express.js, and MongoDB. Users can create, view, edit, and delete personal notes. Rate limiting is implemented to prevent excessive requests.

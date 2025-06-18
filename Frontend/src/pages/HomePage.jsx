@@ -3,6 +3,7 @@ import Navbar from '../components/Navbar'
 import RateLimitedUI from '../components/RateLimitedUI'
 import toast from "react-hot-toast"
 import NoteCard from '../components/NoteCard'
+import { deleteNote, getNotes } from '../lib/api'
 
 const HomePage = () => {
   const [isRateLimited,setIsRateLimited] = useState(false);
@@ -12,7 +13,7 @@ const HomePage = () => {
   useEffect(()=>{
     const fetchNotes = async ()=>{
       try {
-        const res = await fetch("http://localhost:5001/api/notes");
+        const res = await getNotes();
         const data= await res.json();
         setNotes(data);
         console.log(data);
@@ -37,9 +38,7 @@ const HomePage = () => {
   if (!window.confirm("Are you sure you want to delete this note?")) return;
 
   try {
-    const res = await fetch(`http://localhost:5001/api/notes/${id}`, {
-      method: "DELETE",
-    });
+    const res = await deleteNote(id);
 
     if (!res.ok) throw new Error("Failed to delete");
     setNotes((prevNotes) => prevNotes.filter((note) => note._id !== id));

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import { deleteNote, getNoteById } from "../lib/api";
+import { deleteNote, getNoteById, updateNote } from "../lib/api";
 import { ArrowLeftIcon, LoaderIcon, Trash2Icon } from "lucide-react";
 import { Link } from "react-router";
 import toast from "react-hot-toast";
@@ -65,13 +65,7 @@ const NoteDetailPage = () => {
 
     setSaving(true);
     try {
-      const res = await fetch(`http://localhost:5001/api/notes/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(note),
-      });
+      const res = await updateNote(id);
 
       if (!res.ok) throw new Error("Update failed");
 
